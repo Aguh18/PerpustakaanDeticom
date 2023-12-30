@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\authController;
+use App\Http\Controllers\bookController;
 use App\Http\Controllers\dashboardController;
 
 /*
@@ -23,7 +24,10 @@ use App\Http\Controllers\dashboardController;
 
 
 
-Route::get('/home', [dashboardController::class, 'index'])->name('dashboard');
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [authController::class, 'loginView'])->name('loginview');
@@ -34,6 +38,7 @@ Route::middleware(['guest'])->group(function () {
 
 route::middleware(['auth'])->group(function () {
     Route::get('/logout', [authController::class, 'logout'])->name('logout');
-
-    
+    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+    // books
+    Route::get('/book', [bookController::class, 'addView'])->name('addbook');
 });
