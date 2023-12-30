@@ -40,5 +40,6 @@ route::middleware(['auth'])->group(function () {
     Route::get('/logout', [authController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
     // books
-    Route::get('/book', [bookController::class, 'addView'])->name('addbook');
+    Route::get('/book', [bookController::class, 'newbookView'])->name('addbook');
+    Route::post('/book', [bookController::class, 'newbookpost'])->name('postbook');
 });

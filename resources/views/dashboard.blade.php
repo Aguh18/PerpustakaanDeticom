@@ -19,14 +19,14 @@
                         <ul role="list" class="-mx-2 space-y-1">
                             <li>
                                 <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
-                                <a href="#"
+                                <a href="{{ route('home') }}"
                                     class="bg-gray-800 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                     <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                         stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                     </svg>
-                                    Dashboard
+                                    Home
                                     <span
                                         class="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-gray-900 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-gray-700"
                                         aria-hidden="true">5</span>
@@ -149,7 +149,9 @@
                 <div class="flex  items-center  pl-10 w-full   h-20 bg-blue-500">hallo {{ Auth::user()->name }} </div>
                 {{-- main setion --}}
                 <div class=" flex   bg-yellow-100 w-full h-16">
-                    <div class=" flex-auto w-1/2 bg-teal-200"> kiri</div>
+                    <div class=" px-10 flex-auto w-1/2 bg-teal-200">
+                        <a href="{{ route('addbook') }}"> ini tombol tambah</a>
+                    </div>
                     <div class=" flex-auto w-1/2 bg-teal-400"> kanan</div>
                 </div>
                 {{-- book --}}

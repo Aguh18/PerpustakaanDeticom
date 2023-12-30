@@ -23,10 +23,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('books')->insert([
-            'name' => 'Test Book',
+            'title' => 'Test Book',
             'description' => 'Test Book Description',
             'author' => 'Test Author',
             'cover' => 'Test Cover',
+            'category' => 'agama',
             'file' => 'Test File',
             'user_id' => 1,
         ]);

@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Book;
 
 class User extends Authenticatable
 {
@@ -54,5 +55,10 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin", "manager"][$value],
 
         );
+    }
+
+    public function books()
+    {
+        return $this->hasMany(books::class);
     }
 }
