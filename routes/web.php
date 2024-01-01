@@ -42,4 +42,9 @@ route::middleware(['auth'])->group(function () {
     // books
     Route::get('/book', [bookController::class, 'newbookView'])->name('addbook');
     Route::post('/book', [bookController::class, 'newbookpost'])->name('postbook');
+    Route::delete('book/{id}', [bookController::class, 'delete'])->name('book.delete');
+    Route::get('book/edit/{id}', [bookController::class, 'editbookView'])->name('book.edit.view');
+    Route::put('book/edit/{id}', [bookController::class, 'editBook'])->name('book.edit.post');
+        
+    
 });

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\books;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class bookController extends Controller
 {
@@ -12,7 +15,15 @@ class bookController extends Controller
      */
     public function newbookView()
     {
+
         return view('booksManagement.addBook');
+    }
+
+    public function editbookView($id)
+    {
+        $book = books::findorFail($id);
+
+        return view('booksManagement.editBook', compact('book'));
     }
 
     /**
@@ -29,7 +40,6 @@ class bookController extends Controller
     public function newbookPost(Request $request)
     {
 
-
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -40,19 +50,44 @@ class bookController extends Controller
         ]);
 
 
+        $image = $request->file('cover');
 
-        $cover = $request->file('cover')->store('public/books/cover/');
-        $file = $request->file('file')->store('public/books/file/');
+        $input['imagename'] = time() . '.' . $image->extension();
+
+
+
+        $destinationPathresize = public_path('storage/covers');
+
+        $img = Image::make($image->path());
+
+        $img->resize(100, 100, function ($constraint) {
+
+            $constraint->aspectRatio();
+        })->save($destinationPathresize . '/' . $input['imagename']);
+
+
+
+        $destinationPath = public_path('storage/fullsizecover');
+
+        $image->move($destinationPath, $input['imagename']);
+        $destinationPath = public_path('storage/files');
+
+        $file = $request->file('file');
+
+        $input['filename'] = $file->getClientOriginalName() . time() . '.' . $file->extension();
+        $path = $file->storeAs('public/files', $input['filename']);
 
         books::create([
             'title' => $request->title,
             'description' => $request->description,
             'author' => $request->author,
             'category' => $request->category,
-            'cover' => $cover,
-            'file' => $file,
+            'cover' => $input['imagename'],
+            'file' => $input['filename'],
             'user_id' => auth()->user()->id,
         ]);
+
+
 
 
         return redirect()->route('dashboard')->with('success', 'Book Added Successfully');
@@ -63,15 +98,24 @@ class bookController extends Controller
      */
     public function show(books $books)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(books $books)
+    public function editBook($id, request $request)
     {
-        //
+
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'author' => 'required',
+            'category' => 'required',
+            'cover' => 'mimes:png,jpg,jpeg',
+            'file' => 'mimes:pdf',
+        ]);
+        @dd($request->all());
     }
 
     /**
@@ -85,8 +129,16 @@ class bookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(books $books)
+    public function Delete($id)
     {
-        //
+
+        $book = books::find($id);
+
+        Storage::delete('public/covers/' . $book->cover);
+        Storage::delete('public/fullsizecover/' . $book->cover);
+        Storage::delete('public/files/' . $book->file);
+        $book->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Book Deleted Successfully');
     }
 }

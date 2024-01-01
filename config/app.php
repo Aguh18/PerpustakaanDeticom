@@ -1,7 +1,12 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\AuthServiceProvider;
+
+use Illuminate\Broadcasting\BroadcastServiceProvider;
 
 return [
 
@@ -156,9 +161,13 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
+
+
+
         /*
          * Package Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -168,6 +177,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+
+
     ])->toArray(),
 
     /*
@@ -182,6 +194,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Image' => Intervention\Image\Facades\Image::class
+
+
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

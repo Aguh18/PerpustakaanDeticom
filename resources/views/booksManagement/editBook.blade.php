@@ -1,12 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
-    <form class="" action="{{ route('postbook') }}" method="POST" enctype="multipart/form-data">
+    <form class="" method="POST" action="{{ route('book.edit.post', $book->id) }}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="mx-20 my-16 space-y-12 ">
             <div class="pb-12 border-b border-gray-900/10">
                 <h2 class="text-base font-semibold leading-7 text-gray-900">New Book</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">Input new book to our library</p>
+                <p class="mt-1 text-sm leading-6 text-gray-600">Edit your Book</p>
 
                 <div class="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
@@ -17,7 +18,7 @@
 
                                 <input type="text" name="title" id="title" autocomplete="title"
                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Harry potter">
+                                    placeholder="Harry potter" value="{{ $book->title }}">
                             </div>
                         </div>
                     </div>
@@ -30,7 +31,7 @@
 
                                 <input type="text" name="author" id="author" autocomplete="author"
                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Harry potter">
+                                    placeholder="Harry potter" value="{{ $book->author }}">
                             </div>
                         </div>
                     </div>
@@ -43,7 +44,7 @@
                                 <!--Select large-->
                                 <select name="category" id="category" class="border-gray-300 rounded-md "
                                     data-te-select-init data-te-select-size="lg">
-                                    <option value="agama">Agama</option>
+                                    <option value="agama" selected>Agama</option>
                                     <option value="hukum">Hukum</option>
                                     <option value="pendidikan">Pendidikan</option>
                                     <option value="sains">Sains</option>
@@ -63,7 +64,7 @@
                             class="block text-sm font-medium leading-6 text-gray-900">description</label>
                         <div class="mt-2">
                             <textarea id="description" name="description" rows="3"
-                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{ $book->description }}</textarea>
                         </div>
                         <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about that book.</p>
                     </div>
